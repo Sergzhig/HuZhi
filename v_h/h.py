@@ -35,17 +35,18 @@ def register(key):
         logging.warning(sys.argv[1])
         logging.warning(user)
         start_time_dict = {'1': '59/56.0', '2': '59/56.5', '3': '59/57.0', '4': '59/57.5',
-                           '5': '59/58.0', '6': '59/58.5', '7': '59/59.0'}
+                           '5': '59/57.5', '6': '59/56.5', '7': '59/57.0'}
 
         time= datetime.strptime(f'{datetime.now(tz=timezone.utc).strftime("%m/%d/%Y/%H")}/{start_time_dict[key]}', '%m/%d/%Y/%H/%M/%S.%f')
         options = webdriver.ChromeOptions()
-        # options.headless = True
+        options.headless = True
         options.add_argument('--blink-settings=imagesEnabled=false')
         caps = DesiredCapabilities().CHROME
         caps["pageLoadStrategy"] = "none"
         driver = webdriver.Chrome(desired_capabilities=caps, options=options)
         driver.delete_all_cookies()
-        driver.get(sys.argv[3])
+        # driver.get(sys.argv[3])
+        driver.get('https://konzinfoidopont.mfa.gov.hu/')
         f = Hungary(driver)
         logging.warning('Создали драйвер. Открыли сайт')
         for i in range(3):
