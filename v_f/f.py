@@ -36,7 +36,6 @@ if __name__ == "__main__":
             logging.warning(attempts)
             driver.delete_all_cookies()
             driver.get(sys.argv[1])
-            # driver.get('https://consulat.gouv.fr/ru/ambassade-de-france-a-minsk/appointment')
             f = France(driver)
             if 'Bad Gateway' not in driver.page_source:
                 f.click_on('Доступ к услугам')
