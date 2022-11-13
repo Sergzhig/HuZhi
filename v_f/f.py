@@ -22,7 +22,7 @@ class France(BasePage):
 
 if __name__ == "__main__":
     options = webdriver.ChromeOptions()
-    # options.headless = True
+    options.headless = True
     driver = uc.Chrome(options=options)
     for i in range(6):
         try:
