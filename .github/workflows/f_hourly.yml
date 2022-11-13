@@ -1,8 +1,8 @@
-name: Hungary 116H
+name: FR_H
 
 on:
   schedule:
-    - cron: '47 * * * *'
+    - cron: '35 * * * *'
 
 jobs:
   build:
