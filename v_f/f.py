@@ -14,7 +14,7 @@ from utils import telegram
 from driver.base_page import BasePage
 
 from selenium import webdriver
-# from webdriver_manager.chrome import ChromeDriverManager
+
 
 class France(BasePage):
     pass
@@ -22,18 +22,19 @@ class France(BasePage):
 
 if __name__ == "__main__":
     options = webdriver.ChromeOptions()
-    options.headless = True
+    # options.headless = True
     driver = uc.Chrome(options=options)
-    attempts = 0
-    for i in range(4):
+    for i in range(6):
         try:
 
-            start_time_dict = {'0': '59/59.5', '1': '00/00.0', '2': '00/00.0', '3': '00/00.0', '4': '29/59.5'}
+            start_time_dict = {'0': '59/59.5', '1': '00/00.0', '2': '00/00.0', '3': '00/00.0', '4': '14/59.5',
+                               '5': '29/59.5'}
 
-            time = datetime.strptime(f'{datetime.now(tz=timezone.utc).strftime("%m/%d/%Y/%H")}/{start_time_dict[str(i)]}', '%m/%d/%Y/%H/%M/%S.%f')
+            time = datetime.strptime(
+                f'{datetime.now(tz=timezone.utc).strftime("%m/%d/%Y/%H")}/{start_time_dict[str(i)]}',
+                '%m/%d/%Y/%H/%M/%S.%f')
 
-            attempts = attempts + 1
-            logging.warning(attempts)
+            logging.warning(i)
             driver.delete_all_cookies()
             driver.get(sys.argv[1])
             f = France(driver)
@@ -55,7 +56,8 @@ if __name__ == "__main__":
                     telegram.send_doc('🇫🇷 Ф появилась дата', driver.page_source)
                     f.click_on('//section/div')
                     while True:
-                        if f.is_element_displayed('//p[contains(text(),"К сожалению, все наши слоты зарезервированы")]'):
+                        if f.is_element_displayed(
+                                '//p[contains(text(),"К сожалению, все наши слоты зарезервированы")]'):
                             sleep(5)
                             driver.refresh()
                             if f.is_element_displayed('//section/div'):
@@ -66,18 +68,18 @@ if __name__ == "__main__":
                             driver.quit()
                             break
                 elif not f.is_element_displayed('На сегодня нет свободных мест.'):
-                    telegram.send_doc(f'Ф({attempts}): Есть даты!', driver.page_source, debug=False)
+                    telegram.send_doc(f'Ф({i}): Есть даты!', driver.page_source, debug=False)
                     sleep(random.randint(100, 120))
                 else:
                     sleep(random.randint(100, 120))
                 logging.warning('Ф нет дат')
             else:
-                telegram.send_doc(f'Ф({attempts}): Ошибка 502', driver.page_source, debug=False)
+                telegram.send_doc(f'Ф({i}): Ошибка 502', driver.page_source, debug=False)
                 sleep(random.randint(10, 20))
         except Exception as e:
             try:
-                telegram.send_doc(f'Ф({attempts}): Неизвестная ошибка', driver.page_source, debug=False)
+                telegram.send_doc(f'Ф({i}): Неизвестная ошибка', driver.page_source, debug=False)
                 sleep(random.randint(100, 120))
             except Exception as e:
-                telegram.send_message(f'Ф({attempts}): Неизвестная ошибка\n{str(e)}', debug=False)
+                telegram.send_message(f'Ф({i}): Неизвестная ошибка\n{str(e)}', debug=False)
                 sleep(random.randint(100, 120))
