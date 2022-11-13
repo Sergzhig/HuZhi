@@ -35,4 +35,4 @@ jobs:
       - name: Test python
         run: |
           BASE_URL=${{ secrets.BASE_URL }}
-          python3 v_h/h.py $"$BASE_URL_F"
+          python3 v_h/f.py $"$BASE_URL_F"
