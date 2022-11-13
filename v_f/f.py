@@ -14,7 +14,7 @@ from utils import telegram
 from driver.base_page import BasePage
 
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 
 class France(BasePage):
     pass
