@@ -24,10 +24,10 @@ if __name__ == "__main__":
     options = webdriver.ChromeOptions()
     options.headless = True
     driver = uc.Chrome(options=options)
-    for i in range(5):
+    for i in range(4):
         try:
 
-            start_time_dict = {'0': '59/59.5', '1': '00/00.0', '2': '00/00.0', '3': '00/00.0', '4': '00/00.0'}
+            start_time_dict = {'0': '59/59.5', '1': '00/00.0', '2': '00/00.0', '3': '00/00.0'}
 
             time = datetime.strptime(
                 f'{datetime.now(tz=timezone.utc).strftime("%m/%d/%Y/%H")}/{start_time_dict[str(i)]}',
