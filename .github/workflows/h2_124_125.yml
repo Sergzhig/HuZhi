@@ -1,4 +1,4 @@
-name: Hungary 124-123
+name: Hungary 123-121
 
 on:
   schedule:
@@ -35,4 +35,4 @@ jobs:
       - name: Test python
         run: |
           BASE_URL=${{ secrets.BASE_URL }}
-          python3 v_h/h.py ${{ matrix.tag }} "124" "123" "$BASE_URL"
+          python3 v_h/h.py ${{ matrix.tag }} "123" "121" "$BASE_URL"
