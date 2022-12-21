@@ -41,18 +41,39 @@ def register(dt):
         caps = DesiredCapabilities().CHROME
         caps["pageLoadStrategy"] = "none"
         driver = webdriver.Chrome(desired_capabilities=caps, options=options)
+        driver.implicitly_wait(20)
+        sleep(5)
+        # проверка айпи
+        logging.warning('проверка айпи')
+        driver.get("https://2ip.ru/")
+        ip_text = driver.find_element(By.ID, "d_clip_button").text
+        city_text = driver.find_element(By.XPATH, '//div[contains(@class, value-country)]/a[@title="Посмотреть точное место на карте"]').get_attribute("text")
+        logging.warning(ip_text)
+        logging.warning(city_text)
+        sleep(5)
+        telegram.send_doc(caption=f'{name}{index}слот{t}Hserg{user}Проверка айпи{ip_text}-{city_text}',
+                          html=driver.page_source)
+
         driver.delete_all_cookies()
         driver.get(sys.argv[4])
+        sleep(20)
+
         f = Hungary(driver)
         logging.warning('Создали драйвер. Открыли сайт')
-        for i in range(3):
+        for i in range(5):
             if not f.is_element_displayed('//button[@id="langSelector"]') or not f.is_element_displayed('//input[@id="birthDate"]'):
                 driver.refresh()
-                sleep(3)
+                sleep(30)
             else:
                 break
         else:
-            telegram.send_doc(caption=f'{name}{index}слот{t}Hserg{user} Не прогрузился язык или дата', html=driver.page_source)
+            driver.get("https://2ip.ru/")
+            sleep(5)
+            ip_text = driver.find_element(By.ID, "d_clip_button").text
+            city_text = driver.find_element(By.XPATH, '//div[contains(@class, value-country)]/a[@title="Посмотреть точное место на карте"]').get_attribute("text")
+            logging.warning(ip_text)
+            logging.warning(city_text)
+            telegram.send_doc(caption=f'{name}{index}слот{t}Hserg{user} Не прогрузился язык или дата{ip_text}-{city_text}', html=driver.page_source)
             raise RuntimeError(f'Не прогрузился язык или дата {name}-{index}')
         f.click_on_while('//button[@id="langSelector"]')
         while True:
