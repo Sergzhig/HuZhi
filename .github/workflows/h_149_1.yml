@@ -1,8 +1,8 @@
 name: Hungary 149-1
 
 on:
-  schedule:
-    - cron: '31 22 * * *'
+#  schedule:
+#    - cron: '31 22 * * *'
 
 jobs:
   build:
