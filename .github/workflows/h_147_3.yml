@@ -1,15 +1,15 @@
 name: Hungary 147-3
 
 on:
-#  schedule:
-#    - cron: '30 22 * * *'
+  schedule:
+    - cron: '30 22 * * *'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        tag: ['59/55.8', '59/55.9', '59/56.5']
+        tag: ['59/55.8', '59/55.9', '59/56.5', '59/58.0']
     steps:
       - uses: actions/checkout@v2
       - name: Cache requirements
